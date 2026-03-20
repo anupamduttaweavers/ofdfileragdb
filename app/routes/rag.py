@@ -36,6 +36,7 @@ async def rag_ask(body: RagAskRequest, settings: Settings = Depends(get_settings
         retriever,
         default_top_k=settings.rag_top_k,
         rerank_enabled=settings.rag_rerank_enabled,
+        grading_enabled=settings.rag_grading_enabled,
     )
 
     result = pipeline.ask(

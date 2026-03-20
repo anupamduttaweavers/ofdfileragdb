@@ -95,10 +95,11 @@ class Settings(BaseSettings):
     save_every_n: int = 2000
 
     # ── RAG ─────────────────────────────────────────────────────
-    rag_top_k: int = 15
+    rag_top_k: int = 10
     rag_max_tokens: int = 2048
     rag_temperature: float = 0.1
     rag_rerank_enabled: bool = True
+    rag_grading_enabled: bool = False
 
     # ── Sync ────────────────────────────────────────────────────
     sync_enabled: bool = True

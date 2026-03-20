@@ -45,8 +45,9 @@ _GRADE_PROMPT = (
     "You are a grader assessing relevance of a retrieved document to a user question.\n\n"
     "Question: {question}\n\n"
     "Document:\n{document}\n\n"
-    "Does this document contain information relevant to answering the question? "
-    "Answer with ONLY 'yes' or 'no'."
+    "Focus on the CONTENT of the document, not its title or category. "
+    "Does this document contain ANY data, facts, or details that could help answer the question? "
+    "When in doubt, answer 'yes'. Answer with ONLY 'yes' or 'no'."
 )
 
 _REWRITE_PROMPT = (
@@ -118,10 +119,11 @@ class RAGPipeline:
     6. check_hallucination - LLM verifies answer is grounded
     """
 
-    def __init__(self, retriever, *, default_top_k: int = 10, rerank_enabled: bool = True):
+    def __init__(self, retriever, *, default_top_k: int = 10, rerank_enabled: bool = True, grading_enabled: bool = False):
         self._retriever = retriever
         self._default_top_k = default_top_k
         self._rerank_enabled = rerank_enabled
+        self._grading_enabled = grading_enabled
 
     def ask(
         self,
@@ -160,7 +162,7 @@ class RAGPipeline:
                 final_query=query, elapsed_ms=round(elapsed, 2),
             )
 
-        if self._is_ollama_available():
+        if self._grading_enabled and self._is_ollama_available():
             state = self._node_grade_documents(state)
 
             if not state["relevant_docs"] and state["retry_count"] < _MAX_RETRIES:

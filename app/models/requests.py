@@ -27,7 +27,7 @@ class SearchRequest(BaseModel):
 class RagAskRequest(BaseModel):
     """POST /api/v1/rag/ask"""
     query: str = Field(..., min_length=1, max_length=2000, description="Question for RAG-augmented answer")
-    top_k: int = Field(5, ge=1, le=20, description="Number of source documents to retrieve")
+    top_k: Optional[int] = Field(None, ge=1, le=50, description="Number of source documents to retrieve (uses server RAG_TOP_K if not set)")
     db_filter: Optional[str] = Field(None, description="Restrict source docs to a specific database")
     temperature: float = Field(0.1, ge=0.0, le=2.0, description="LLM sampling temperature")
     rerank: Optional[bool] = Field(None, description="Enable reranking (overrides server default)")
