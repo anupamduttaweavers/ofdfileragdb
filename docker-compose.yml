@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: ofb-discovery-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./faiss_index:/app/faiss_index
+      - ./configs:/app/configs
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    networks:
+      - ofb-net
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ofb-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - ofb-net
+
+  # Uncomment to run MySQL alongside the stack
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: ofb-mysql
+  #   ports:
+  #     - "3307:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: rootpassword
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  #   restart: unless-stopped
+  #   networks:
+  #     - ofb-net
+
+volumes:
+  ollama_data:
+  # mysql_data:
+
+networks:
+  ofb-net:
+    driver: bridge

@@ -1,0 +1,47 @@
+# Environment & Secrets
+.env
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# FAISS index (large binary files — rebuilt on startup)
+faiss_index/
+
+# FlashRank model cache
+flashrank_cache/
+
+# SQLite runtime data
+data/*.db
+
+# Sync state (runtime)
+sync_state.json
+
+# Uploaded files (runtime data)
+uploads/
+
+# Config store (runtime, contains encrypted passwords)
+configs/connections.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
