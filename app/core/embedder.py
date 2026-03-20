@@ -26,9 +26,10 @@ EMBED_MODEL: str = _settings.ollama_embed_model
 EMBED_DIM: int = _settings.embedding_dims
 LLM_MODEL: str = _settings.ollama_llm_model
 _TIMEOUT: int = _settings.ollama_timeout
+_LLM_TIMEOUT: int = _settings.ollama_llm_timeout
 
 
-def _post(endpoint: str, payload: dict) -> dict:
+def _post(endpoint: str, payload: dict, timeout: int | None = None) -> dict:
     url = f"{OLLAMA_BASE}{endpoint}"
     body = json.dumps(payload).encode()
     req = urllib.request.Request(
@@ -36,7 +37,7 @@ def _post(endpoint: str, payload: dict) -> dict:
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=_TIMEOUT) as resp:
+    with urllib.request.urlopen(req, timeout=timeout or _TIMEOUT) as resp:
         return json.loads(resp.read().decode())
 
 
@@ -93,7 +94,10 @@ def embed_query(query: str) -> np.ndarray:
     return embed_texts([query])
 
 
-def llm_generate(prompt: str, system: str = "", temperature: float = 0.1) -> str:
+def llm_generate(
+    prompt: str, system: str = "", temperature: float = 0.1,
+    timeout: int | None = None,
+) -> str:
     payload: dict = {
         "model": LLM_MODEL,
         "prompt": prompt,
@@ -103,5 +107,5 @@ def llm_generate(prompt: str, system: str = "", temperature: float = 0.1) -> str
     if system:
         payload["system"] = system
 
-    resp = _post("/api/generate", payload)
+    resp = _post("/api/generate", payload, timeout=timeout or _LLM_TIMEOUT)
     return resp.get("response", "").strip()

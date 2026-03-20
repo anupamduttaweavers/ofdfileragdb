@@ -278,11 +278,13 @@ def build_document(cfg: TableConfig, row: Dict[str, Any]) -> Tuple[str, str, Dic
     if builder:
         text = builder(row)
     else:
-        text = cfg.label + "\n"
+        parts = []
         for col in cfg.text_columns:
             val = _clean(row.get(col))
             if val and val.lower() not in ("none", "null", "nan", "0", ""):
-                text += f"{col}: {val}\n"
+                label = col.replace("_", " ").title()
+                parts.append(f"{label}: {val}")
+        text = f"{cfg.label}\n" + "\n".join(parts)
 
     if cfg.pk_column and row.get(cfg.pk_column) is not None:
         pk_val = str(row[cfg.pk_column])

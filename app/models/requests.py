@@ -58,8 +58,12 @@ class DiscoverRequest(BaseModel):
     password: str = Field("", description="MySQL password")
     database: str = Field(..., min_length=1, description="Database name to discover")
     force: bool = Field(False, description="Re-discover even if config already exists")
+    mode: Optional[str] = Field(
+        None, pattern=r"^(heuristic|llm|auto)$",
+        description="Discovery mode: 'heuristic' (instant), 'llm' (background), 'auto' (heuristic + LLM). Defaults to DISCOVERY_MODE from .env.",
+    )
 
-    model_config = {"json_schema_extra": {"examples": [{"host": "127.0.0.1", "port": 3307, "user": "root", "password": "rootpassword", "database": "mydb"}]}}
+    model_config = {"json_schema_extra": {"examples": [{"host": "127.0.0.1", "port": 3307, "user": "root", "password": "rootpassword", "database": "mydb", "mode": "heuristic"}]}}
 
 
 class DatabaseRegisterRequest(BaseModel):
@@ -71,7 +75,11 @@ class DatabaseRegisterRequest(BaseModel):
     user: str = Field(..., min_length=1, description="MySQL user")
     password: str = Field("", description="MySQL password")
     database: str = Field(..., min_length=1, description="Actual MySQL database name")
-    auto_discover: bool = Field(True, description="Trigger LLM schema discovery after registration")
+    auto_discover: bool = Field(True, description="Run schema discovery after registration (heuristic by default)")
+    discovery_mode: Optional[str] = Field(
+        None, pattern=r"^(heuristic|llm|auto)$",
+        description="Override discovery mode for this request. Defaults to DISCOVERY_MODE from .env.",
+    )
     file_columns: Optional[Dict[str, List[List[str]]]] = Field(
         None,
         description="Manual override: {table_name: [[path_col, type_col], ...]}",

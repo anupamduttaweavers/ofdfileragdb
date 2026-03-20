@@ -5,8 +5,8 @@ Admin management endpoints: login, user CRUD, table listing and selection.
 
 Auth:
   - POST /admin/login — no auth required
-  - All other endpoints — JWT Bearer required
-  - User CRUD — superadmin role required
+  - User CRUD, /me — JWT Bearer required (superadmin for CRUD)
+  - Table listing/selection — API key or JWT (consistent with databases router)
 """
 
 from __future__ import annotations
@@ -18,6 +18,7 @@ from fastapi import APIRouter, Depends, Header
 
 from app.config import Settings, get_settings
 from app.core.admin_auth import authenticate, create_jwt, verify_jwt
+from app.dependencies import require_admin_or_api_key
 from app.exceptions import AuthenticationError, ForbiddenError, ResourceNotFoundError
 from app.models.requests import AdminCreateUserRequest, AdminLoginRequest, TableSelectionRequest
 from app.models.responses import (
@@ -144,7 +145,7 @@ async def deactivate_user(user_id: int, _: dict = Depends(_require_superadmin)):
     response_model=TableConfigListResponse,
     summary="List tables for a database with selection state",
 )
-async def list_tables_for_db(name: str, _: dict = Depends(_extract_jwt_payload)):
+async def list_tables_for_db(name: str, _: str = Depends(require_admin_or_api_key)):
     from app.core.config_db import get_table_configs_for_db, connection_exists
     if not connection_exists(name):
         raise ResourceNotFoundError("database", name)
@@ -174,7 +175,7 @@ async def list_tables_for_db(name: str, _: dict = Depends(_extract_jwt_payload))
     response_model=TableSelectionResponse,
     summary="Update table selection (select/deselect individual tables)",
 )
-async def update_table_selection(name: str, body: TableSelectionRequest, _: dict = Depends(_extract_jwt_payload)):
+async def update_table_selection(name: str, body: TableSelectionRequest, _: str = Depends(require_admin_or_api_key)):
     from app.core.config_db import toggle_table_selection, connection_exists
     if not connection_exists(name):
         raise ResourceNotFoundError("database", name)
@@ -192,7 +193,7 @@ async def update_table_selection(name: str, body: TableSelectionRequest, _: dict
     response_model=TableSelectionResponse,
     summary="Select all tables for a database",
 )
-async def select_all_tables(name: str, _: dict = Depends(_extract_jwt_payload)):
+async def select_all_tables(name: str, _: str = Depends(require_admin_or_api_key)):
     from app.core.config_db import set_all_tables_selection, connection_exists
     if not connection_exists(name):
         raise ResourceNotFoundError("database", name)
@@ -206,7 +207,7 @@ async def select_all_tables(name: str, _: dict = Depends(_extract_jwt_payload)):
     response_model=TableSelectionResponse,
     summary="Deselect all tables for a database",
 )
-async def deselect_all_tables(name: str, _: dict = Depends(_extract_jwt_payload)):
+async def deselect_all_tables(name: str, _: str = Depends(require_admin_or_api_key)):
     from app.core.config_db import set_all_tables_selection, connection_exists
     if not connection_exists(name):
         raise ResourceNotFoundError("database", name)

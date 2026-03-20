@@ -32,9 +32,13 @@ _MAX_RETRIES = 2
 _RAG_SYSTEM_PROMPT = (
     "You are an expert document analyst for the Ordnance Factory Board (OFB) system. "
     "Answer the user's question based ONLY on the provided context documents. "
+    "IMPORTANT: Consider ALL provided documents carefully, even if they come from "
+    "different database tables or have different formats. Synthesize information "
+    "from all relevant sources into a comprehensive answer. "
+    "Do NOT dismiss any document without a clear reason. "
     "If the information is not in the context, state that clearly. "
     "When citing information, reference the source document number in square brackets like [1], [2]. "
-    "Be concise, accurate, and professional."
+    "Be accurate and thorough."
 )
 
 _GRADE_PROMPT = (
@@ -299,14 +303,16 @@ class RAGPipeline:
         for i, doc in enumerate(docs):
             meta = doc.metadata
             header = f"[{i+1}] {meta.get('doc_label', '')} ({meta.get('source_db', '')}.{meta.get('source_table', '')})"
-            context_parts.append(f"{header}\n{doc.page_content[:800]}")
+            context_parts.append(f"{header}\n{doc.page_content[:1500]}")
 
         context_block = "\n\n---\n\n".join(context_parts)
 
         prompt = (
             f"Context Documents:\n\n{context_block}\n\n"
             f"User Question: {state['question']}\n\n"
-            f"Provide a clear, well-structured answer based on the context above."
+            f"Instructions: Review ALL context documents above. Extract and combine "
+            f"relevant information from every source, regardless of which database or "
+            f"table it comes from. Provide a clear, well-structured, and comprehensive answer."
         )
 
         try:
@@ -322,7 +328,7 @@ class RAGPipeline:
         try:
             from app.core.lc_llm import invoke_llm
 
-            doc_texts = "\n\n".join(d.page_content[:500] for d in docs[:5])
+            doc_texts = "\n\n".join(d.page_content[:1000] for d in docs[:5])
             prompt = _HALLUCINATION_PROMPT.format(
                 documents=doc_texts,
                 generation=state["generation"],

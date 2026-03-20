@@ -9,7 +9,7 @@ Commands:
   search "<query>" --db misofb       Search within one DB
   demo                               Run example queries
   sync ofbdb certificate_report      Incremental re-index one table
-  discover --host H --user U --db D  Analyse a NEW DB with Llama 3 8B
+  discover --host H --user U --db D  Analyse a NEW DB (heuristic; add --llm for LLM)
   status                             Show index stats
 
 Setup (all offline after initial pull):
@@ -137,26 +137,46 @@ def cmd_sync(db_name: str, table_name: str):
 
 def cmd_discover(
     host: str, port: int, user: str, password: str, database: str,
-    force: bool = False,
+    force: bool = False, mode: str = "heuristic",
 ):
     """
-    Analyse a brand-new database with Llama 3 8B and save its config.
-    After discovery, run  python main.py index  to vectorise it.
+    Analyse a brand-new database and save its config.
+    Heuristic discovery is instant. Pass --llm or --mode=auto to refine with LLM.
     """
+    from app.core.schema_intelligence import (
+        llm_discover, merge_llm_over_heuristic, save_config,
+        heuristic_discover, _get_schema_info,
+    )
+
     print(f"\nDiscovering schema for [{database}] at {host}:{port} …")
-    print("(Calling Llama 3 8B via Ollama — may take 30–90 seconds)\n")
 
     configs = discover_and_configure(
         host=host, port=port, user=user, password=password,
-        database=database, force_rediscover=force,
+        database=database, force_rediscover=force, mode=mode,
     )
 
     if not configs:
-        print("✗ Discovery failed. Check Ollama logs (ollama serve).")
+        print("✗ No suitable tables found.")
         sys.exit(1)
 
-    print(f"✓ Discovered {len(configs)} tables for [{database}]:\n")
+    print(f"✓ Heuristic discovered {len(configs)} tables for [{database}]:\n")
     print_config_summary(configs)
+
+    if mode in ("llm", "auto"):
+        print("Running LLM refinement (this may take a few minutes)…\n")
+        try:
+            schema = _get_schema_info(host, port, user, password, database)
+            llm_configs = llm_discover(host, port, user, password, database, schema=schema)
+            if llm_configs:
+                configs = merge_llm_over_heuristic(configs, llm_configs)
+                save_config(database, configs)
+                print(f"✓ LLM refined {len(configs)} tables:\n")
+                print_config_summary(configs)
+            else:
+                print("⚠ LLM returned no results; keeping heuristic config.\n")
+        except Exception as exc:
+            print(f"⚠ LLM refinement failed: {exc}\n  Keeping heuristic config.\n")
+
     print(f"Config saved to  configs/{database}.json")
     print(f"\nNext step:  python main.py index --db {database}")
 
@@ -221,7 +241,7 @@ def main():
     p_sync.add_argument("table_name")
 
     # discover
-    p_disc = sub.add_parser("discover", help="Auto-configure a new DB with Llama 3 8B")
+    p_disc = sub.add_parser("discover", help="Auto-configure a new DB (heuristic by default, --llm for LLM refinement)")
     p_disc.add_argument("--host",     default="localhost")
     p_disc.add_argument("--port",     type=int, default=3306)
     p_disc.add_argument("--user",     required=True)
@@ -229,6 +249,10 @@ def main():
     p_disc.add_argument("--db",       dest="database", required=True)
     p_disc.add_argument("--force",    action="store_true",
                         help="Re-discover even if config already exists")
+    p_disc.add_argument("--llm",      action="store_true",
+                        help="Also run LLM refinement after heuristic (requires Ollama)")
+    p_disc.add_argument("--mode",     default=None, choices=["heuristic", "llm", "auto"],
+                        help="Discovery mode (default: heuristic, overrides --llm)")
 
     # status
     sub.add_parser("status", help="Show config and index stats")
@@ -244,10 +268,12 @@ def main():
     elif args.command == "sync":
         cmd_sync(args.db_name, args.table_name)
     elif args.command == "discover":
+        mode = args.mode or ("auto" if args.llm else "heuristic")
         cmd_discover(
             host=args.host, port=args.port,
             user=args.user, password=args.password,
             database=args.database, force=args.force,
+            mode=mode,
         )
     elif args.command == "status":
         cmd_status()

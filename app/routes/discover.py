@@ -1,7 +1,10 @@
 """
 app/routes/discover.py
 ───────────────────────
-Auto-discover a new database schema using Llama 3 8B.
+Auto-discover a new database schema.
+
+Default mode is heuristic (instant, no LLM). Optionally refines with LLM
+in background when mode='auto' or mode='llm'.
 
 After successful discovery, persists connection credentials to
 ConnectionStore so the database is available on restart without
@@ -11,12 +14,13 @@ re-registration.
 from __future__ import annotations
 
 import logging
+import threading
 
 from fastapi import APIRouter, Depends
 
 from app.core.connection_store import DBCredentials, get_connection_store
 from app.dependencies import require_api_key
-from app.exceptions import DatabaseConnectionError, OllamaUnavailableError, LLMGenerationError
+from app.exceptions import DatabaseConnectionError
 from app.models.requests import DiscoverRequest
 from app.models.responses import DiscoverResponse
 
@@ -27,10 +31,15 @@ router = APIRouter(prefix="/api/v1", tags=["Discovery"], dependencies=[Depends(r
 @router.post(
     "/discover",
     response_model=DiscoverResponse,
-    summary="Auto-discover and configure a new database using LLM schema analysis",
+    summary="Auto-discover and configure a new database schema",
 )
 async def discover_database(body: DiscoverRequest):
-    from app.core.schema_intelligence import discover_and_configure
+    from app.core.schema_intelligence import (
+        discover_and_configure, _persist_to_sqlite,
+        _resolve_mode, run_llm_refinement_background,
+    )
+
+    effective_mode = _resolve_mode(body.mode)
 
     try:
         configs = discover_and_configure(
@@ -40,14 +49,8 @@ async def discover_database(body: DiscoverRequest):
             password=body.password,
             database=body.database,
             force_rediscover=body.force,
+            mode=effective_mode,
         )
-    except RuntimeError as exc:
-        error_msg = str(exc).lower()
-        if "ollama" in error_msg or "cannot reach" in error_msg:
-            raise OllamaUnavailableError(
-                "Ollama is required for schema discovery but is not reachable."
-            ) from exc
-        raise LLMGenerationError(f"Discovery failed: {exc}") from exc
     except Exception as exc:
         raise DatabaseConnectionError(body.database, f"Failed to discover schema: {exc}") from exc
 
@@ -62,6 +65,9 @@ async def discover_database(body: DiscoverRequest):
         ))
         log.info("Persisted connection credentials for '%s' after discovery.", body.database)
 
+    if configs:
+        _persist_to_sqlite(body.database, configs)
+
     if not configs:
         return DiscoverResponse(
             database=body.database,
@@ -70,9 +76,32 @@ async def discover_database(body: DiscoverRequest):
             message="Discovery completed but no suitable tables were found.",
         )
 
+    if effective_mode in ("llm", "auto"):
+        thread = threading.Thread(
+            target=run_llm_refinement_background,
+            kwargs=dict(
+                db_name=body.database,
+                host=body.host, port=body.port,
+                user=body.user, password=body.password,
+                database=body.database,
+            ),
+            daemon=True,
+            name=f"llm-refine-{body.database}",
+        )
+        thread.start()
+        return DiscoverResponse(
+            database=body.database,
+            tables_discovered=len(configs),
+            tables=[c.table for c in configs],
+            message=(
+                f"Discovered {len(configs)} tables (heuristic). "
+                f"LLM refinement running in background."
+            ),
+        )
+
     return DiscoverResponse(
         database=body.database,
         tables_discovered=len(configs),
         tables=[c.table for c in configs],
-        message=f"Discovered {len(configs)} tables. Run POST /api/v1/index to vectorise them.",
+        message=f"Discovered {len(configs)} tables (heuristic). Run POST /api/v1/index to vectorise them.",
     )

@@ -7,8 +7,11 @@ Handcrafted configs for ofbdb and misofb.
 Auto-discovered configs loaded from configs/<db_name>.json.
 """
 
+import logging
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
+
+log = logging.getLogger("app.core.schema_config")
 
 
 @dataclass
@@ -388,7 +391,55 @@ def get_all_configs() -> List[TableConfig]:
                     seen.add(key)
             known_dbs.add(db_name)
 
-    return all_cfgs
+    return _deduplicate_physical(all_cfgs)
+
+
+def _deduplicate_physical(cfgs: List[TableConfig]) -> List[TableConfig]:
+    """Remove configs that map to the same physical host:port/database + table.
+
+    Handcrafted configs (ofbdb, misofb) come first in the list and always win.
+    Unknown logical names pass through unfiltered to avoid data loss.
+    """
+    from app.core.connection_store import get_connection_store
+    from app.config import get_settings
+
+    try:
+        store = get_connection_store()
+        all_conns = store.load_all()
+    except Exception:
+        return cfgs
+
+    settings = get_settings()
+
+    physical_map: dict = {}
+    for name, cred in all_conns.items():
+        physical_map[name] = f"{cred.host}:{cred.port}/{cred.database}"
+
+    if "ofbdb" not in physical_map:
+        physical_map["ofbdb"] = (
+            f"{settings.ofbdb_host}:{settings.ofbdb_port}/{settings.ofbdb_database}"
+        )
+    if "misofb" not in physical_map:
+        physical_map["misofb"] = (
+            f"{settings.misofb_host}:{settings.misofb_port}/{settings.misofb_database}"
+        )
+
+    seen_physical: set = set()
+    result: list = []
+    for cfg in cfgs:
+        phys = physical_map.get(cfg.db)
+        if phys:
+            key = (phys, cfg.table)
+            if key in seen_physical:
+                log.info(
+                    "Skipping duplicate physical table: %s.%s "
+                    "(already indexed under another connection name)",
+                    cfg.db, cfg.table,
+                )
+                continue
+            seen_physical.add(key)
+        result.append(cfg)
+    return result
 
 
 def _get_deselected_keys() -> set:

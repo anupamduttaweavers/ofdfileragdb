@@ -1,0 +1,1775 @@
+[
+  {
+    "db": "mydb",
+    "table": "Rejven",
+    "label": "Rejven",
+    "description": "Rejected vendors",
+    "pk_column": null,
+    "text_columns": [
+      "Factory",
+      "State",
+      "City",
+      "Street",
+      "Pin",
+      "item_details",
+      "item_spec",
+      "Tproduct",
+      "VendorTAN",
+      "IP",
+      "reason",
+      "vendor_address"
+    ],
+    "metadata_columns": [
+      "Namev",
+      "Date",
+      "factory_id",
+      "vm_id"
+    ],
+    "date_column": "Date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "addendum_items",
+    "label": "Addendum Items",
+    "description": "Table addendum_items (18 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_code",
+      "drawing_no",
+      "item_unit",
+      "item_type",
+      "item_description",
+      "item_specification",
+      "item_quantity"
+    ],
+    "metadata_columns": [
+      "id",
+      "addendum_request_id",
+      "item_id",
+      "item_name",
+      "approx_value",
+      "item_status",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "item_file",
+        "item_type"
+      ],
+      [
+        "item_specification_file",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "advertisement",
+    "label": "Advertisement",
+    "description": "Table advertisement (20 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "corrigendum_detail",
+      "quantity",
+      "remark",
+      "account_no",
+      "ifs_code",
+      "bank_name",
+      "micr_code"
+    ],
+    "metadata_columns": [
+      "id",
+      "corrigendum_id",
+      "adv_number",
+      "approx_value",
+      "factory_id",
+      "last_date",
+      "created_by",
+      "last_updated_by",
+      "created_at",
+      "updated_at",
+      "adv_status",
+      "deleted_at",
+      "publish_status"
+    ],
+    "date_column": "last_date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "advertisement_corigendum",
+    "label": "Advertisement Corigendum",
+    "description": "Table advertisement_corigendum (20 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "adv_number",
+      "quantity",
+      "remark",
+      "account_no",
+      "ifs_code",
+      "bank_name",
+      "micr_code",
+      "corrigendum_detail"
+    ],
+    "metadata_columns": [
+      "id",
+      "adv_id",
+      "approx_value",
+      "factory_id",
+      "last_date",
+      "created_by",
+      "last_updated_by",
+      "created_at",
+      "updated_at",
+      "adv_status",
+      "deleted_at",
+      "publish_status"
+    ],
+    "date_column": "last_date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "advertisement_corrigendum_items",
+    "label": "Advertisement Corrigendum Items",
+    "description": "Table advertisement_corrigendum_items (17 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_name",
+      "item_code",
+      "drawing_no",
+      "item_unit",
+      "item_type",
+      "item_description",
+      "item_specification",
+      "item_quantity"
+    ],
+    "metadata_columns": [
+      "id",
+      "adv_id",
+      "item_id",
+      "approx_value",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "item_file",
+        "item_type"
+      ],
+      [
+        "item_specification_file",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "advertisement_items",
+    "label": "Advertisement Items",
+    "description": "Table advertisement_items (30 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_code",
+      "drawing_no",
+      "item_type",
+      "item_description",
+      "item_specification",
+      "item_quantity",
+      "man_tech_1",
+      "man_tech_2",
+      "man_tech_3",
+      "man_tech_4",
+      "man_tech_5",
+      "test_facility_1",
+      "test_facility_2",
+      "test_facility_3",
+      "test_facility_4",
+      "test_facility_5",
+      "man_tech_files",
+      "test_facility_files"
+    ],
+    "metadata_columns": [
+      "id",
+      "adv_id",
+      "item_id",
+      "item_name",
+      "item_unit",
+      "approx_value",
+      "is_cv",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "item_file",
+        "item_type"
+      ],
+      [
+        "item_specification_file",
+        ""
+      ],
+      [
+        "man_tech_files",
+        ""
+      ],
+      [
+        "test_facility_files",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "advertisement_items_diff",
+    "label": "Advertisement Items Diff",
+    "description": "Table advertisement_items_diff (17 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_name",
+      "item_code",
+      "drawing_no",
+      "item_unit",
+      "item_type",
+      "item_description",
+      "item_specification",
+      "item_quantity"
+    ],
+    "metadata_columns": [
+      "id",
+      "adv_id",
+      "item_id",
+      "approx_value",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "item_file",
+        "item_type"
+      ],
+      [
+        "item_specification_file",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "category",
+    "label": "Category",
+    "description": "Table category (2 columns)",
+    "pk_column": "category_id",
+    "text_columns": [
+      "category"
+    ],
+    "metadata_columns": [
+      "category_id"
+    ],
+    "date_column": null,
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "certificate_report",
+    "label": "Certificate Report",
+    "description": "Table certificate_report (29 columns)",
+    "pk_column": "report_id",
+    "text_columns": [
+      "email_id",
+      "address",
+      "road",
+      "city",
+      "state",
+      "phone_no",
+      "grade",
+      "size",
+      "items",
+      "factory_name",
+      "gst_no"
+    ],
+    "metadata_columns": [
+      "report_id",
+      "vm_id",
+      "vendor_name",
+      "name",
+      "state_id",
+      "pin_code",
+      "tan_no",
+      "category",
+      "valid_upto",
+      "registration_date",
+      "original_registration_date",
+      "reg_type",
+      "user_id",
+      "vendor_code",
+      "factory_id",
+      "factory_reg_no",
+      "application_type",
+      "parent_id"
+    ],
+    "date_column": "valid_upto",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "certificate_report_product",
+    "label": "Certificate Report Product",
+    "description": "Table certificate_report_product (10 columns)",
+    "pk_column": "prod_id",
+    "text_columns": [
+      "item_code",
+      "item_name",
+      "item_specification"
+    ],
+    "metadata_columns": [
+      "prod_id",
+      "report_id",
+      "vm_id",
+      "item_name",
+      "item_type",
+      "item_status",
+      "updated_at",
+      "updated_by"
+    ],
+    "date_column": "updated_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "factory_master",
+    "label": "Factory Master",
+    "description": "Table factory_master (13 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "factory_code",
+      "address",
+      "street",
+      "city",
+      "state",
+      "pin_code",
+      "abbreviation"
+    ],
+    "metadata_columns": [
+      "id",
+      "name",
+      "created_at",
+      "updated_at",
+      "factory_status",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "factory_user",
+    "label": "Factory User",
+    "description": "Table factory_user (12 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "emp_code",
+      "first_name",
+      "middle_name",
+      "last_name",
+      "department",
+      "designation"
+    ],
+    "metadata_columns": [
+      "id",
+      "user_id",
+      "factory_id",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "file_master",
+    "label": "File Master",
+    "description": "Table file_master (7 columns)",
+    "pk_column": "id",
+    "text_columns": [],
+    "metadata_columns": [
+      "id",
+      "user_id",
+      "file_name",
+      "created_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "file_name",
+        "file_name"
+      ],
+      [
+        "file_path",
+        "file_type"
+      ],
+      [
+        "file_type",
+        "file_type"
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "item",
+    "label": "Item",
+    "description": "Table item (5 columns)",
+    "pk_column": "item_id",
+    "text_columns": [
+      "item_name"
+    ],
+    "metadata_columns": [
+      "item_id",
+      "subcategory_id"
+    ],
+    "date_column": null,
+    "file_columns": [
+      [
+        "html_file",
+        ""
+      ],
+      [
+        "image_path",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "item_master",
+    "label": "Item Master",
+    "description": "Table item_master (31 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_code",
+      "item_description",
+      "item_specification",
+      "item_unit",
+      "item_link",
+      "drawing_no",
+      "item_type",
+      "major_code",
+      "specification_files",
+      "man_tech_1",
+      "man_tech_2",
+      "man_tech_3",
+      "man_tech_4",
+      "man_tech_5",
+      "test_facility_1",
+      "test_facility_2",
+      "test_facility_3",
+      "test_facility_4",
+      "test_facility_5",
+      "man_tech_files",
+      "test_facility_files"
+    ],
+    "metadata_columns": [
+      "id",
+      "factory_id",
+      "name",
+      "created_at",
+      "updated_at",
+      "item_status",
+      "deleted_at",
+      "factory_code",
+      "is_cv"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "item_file",
+        "item_type"
+      ],
+      [
+        "specification_files",
+        ""
+      ],
+      [
+        "man_tech_files",
+        ""
+      ],
+      [
+        "test_facility_files",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "item_master_diff",
+    "label": "Item Master Diff",
+    "description": "Table item_master_diff (18 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_code",
+      "item_description",
+      "item_specification",
+      "item_unit",
+      "item_link",
+      "drawing_no",
+      "item_type",
+      "major_code",
+      "specification_files"
+    ],
+    "metadata_columns": [
+      "id",
+      "factory_id",
+      "name",
+      "created_at",
+      "updated_at",
+      "item_status",
+      "deleted_at",
+      "factory_code"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "item_file",
+        "item_type"
+      ],
+      [
+        "specification_files",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "registration_ammount",
+    "label": "Registration Ammount",
+    "description": "Table registration_ammount (10 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "category_name",
+      "category_abbr"
+    ],
+    "metadata_columns": [
+      "id",
+      "factory_id",
+      "ammount",
+      "created_by",
+      "created_at",
+      "updated_by",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "renewal_items",
+    "label": "Renewal Items",
+    "description": "Table renewal_items (18 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_name",
+      "item_code",
+      "drawing_no",
+      "item_unit",
+      "item_type",
+      "item_description",
+      "item_specification",
+      "item_quantity"
+    ],
+    "metadata_columns": [
+      "id",
+      "renewal_request_id",
+      "item_id",
+      "item_status",
+      "approx_value",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "item_file",
+        "item_type"
+      ],
+      [
+        "item_specification_file",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "state",
+    "label": "State",
+    "description": "Table state (3 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "name"
+    ],
+    "metadata_columns": [
+      "id",
+      "CountryID"
+    ],
+    "date_column": null,
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "subcategory",
+    "label": "Subcategory",
+    "description": "Table subcategory (5 columns)",
+    "pk_column": "subcategory_id",
+    "text_columns": [
+      "subcategory",
+      "subcategory_intro"
+    ],
+    "metadata_columns": [
+      "subcategory_id",
+      "category_id"
+    ],
+    "date_column": null,
+    "file_columns": [
+      [
+        "moviefile_path",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "user_permission_master",
+    "label": "User Permission Master",
+    "description": "Table user_permission_master (5 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "name",
+      "tag"
+    ],
+    "metadata_columns": [
+      "id",
+      "created_at",
+      "updated_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_addendum_request",
+    "label": "Vendor Addendum Request",
+    "description": "Table vendor_addendum_request (19 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "addendum_reason",
+      "general_files",
+      "additional_items",
+      "additional_documents",
+      "basis_of_estimation",
+      "reject_reason"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "new_vm_id",
+      "registration_id",
+      "vendor_code_id",
+      "reference_no",
+      "is_same_technology",
+      "created_at",
+      "created_by",
+      "ammount",
+      "status",
+      "updated_at",
+      "updated_by"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "general_files",
+        ""
+      ],
+      [
+        "additional_documents",
+        "additional_documents"
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_ammendment_request",
+    "label": "Vendor Ammendment Request",
+    "description": "Table vendor_ammendment_request (34 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "vendor_code_id",
+      "reference_no",
+      "amendment_reason",
+      "general_files",
+      "reason_of_add_change",
+      "firm_name",
+      "regd_office_address",
+      "regd_office_pin",
+      "regd_office_std",
+      "regd_office_phone1",
+      "regd_office_phone2",
+      "regd_office_fax",
+      "regd_office_email",
+      "regd_office_mobile",
+      "office_fax",
+      "factory_address",
+      "factory_teliphone_no",
+      "factory_fax",
+      "financial_power",
+      "additional_items",
+      "attached_documents",
+      "reject_reason"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "new_vm_id",
+      "registration_id",
+      "is_address_change",
+      "is_same_technology",
+      "created_at",
+      "created_by",
+      "ammount",
+      "status",
+      "updated_at",
+      "updated_by"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "general_files",
+        ""
+      ],
+      [
+        "attached_documents",
+        "attached_documents"
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_assessment",
+    "label": "Vendor Assessment",
+    "description": "Table vendor_assessment (14 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "part_1_details",
+      "part_2_details"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "part_1_no",
+      "part_1_perc",
+      "part_2_no",
+      "part_2_perc",
+      "total_no",
+      "created_by",
+      "updated_by",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_capacity_schedule",
+    "label": "Vendor Capacity Schedule",
+    "description": "Table vendor_capacity_schedule (9 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "schedule_text"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "schedule_date",
+      "created_by",
+      "created_at",
+      "updated_by",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "schedule_date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_clarification",
+    "label": "Vendor Clarification",
+    "description": "Table vendor_clarification (9 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "comment"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "posted_by",
+      "user_type",
+      "clarification_type",
+      "created_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "attach_file",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_debar",
+    "label": "Vendor Debar",
+    "description": "Table vendor_debar (11 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "reason"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "report_id",
+      "user_id",
+      "debar_date",
+      "created_by",
+      "created_at",
+      "updated_by",
+      "updated_at"
+    ],
+    "date_column": "debar_date",
+    "file_columns": [
+      [
+        "debar_file",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_deemed_registration",
+    "label": "Vendor Deemed Registration",
+    "description": "Table vendor_deemed_registration (28 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "officer_designation",
+      "officer_name",
+      "vendor_name",
+      "vendor_abbr",
+      "vendor_address",
+      "vendor_street",
+      "vendor_city",
+      "vendor_state",
+      "vendor_pin",
+      "vendor_phone",
+      "vendor_email",
+      "vendor_size",
+      "vendor_grade",
+      "vendor_category",
+      "vendor_financial",
+      "vendor_collaboration",
+      "vendor_item_code"
+    ],
+    "metadata_columns": [
+      "id",
+      "created_by",
+      "factory_id",
+      "vendor_tan",
+      "vendor_num_prod",
+      "deemed_status",
+      "created_at",
+      "updated_at",
+      "deleted_at",
+      "deemed_type",
+      "parent_id"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_deemed_registration_items",
+    "label": "Vendor Deemed Registration Items",
+    "description": "Table vendor_deemed_registration_items (12 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_name",
+      "item_specification",
+      "type_code",
+      "item_establish"
+    ],
+    "metadata_columns": [
+      "id",
+      "dm_id",
+      "item_ids",
+      "item_order",
+      "is_main_item",
+      "craeted_by",
+      "created_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_established_registration",
+    "label": "Vendor Established Registration",
+    "description": "Table vendor_established_registration (28 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "officer_designation",
+      "officer_name",
+      "vendor_abbr",
+      "vendor_address",
+      "vendor_street",
+      "vendor_city",
+      "vendor_state",
+      "vendor_pin",
+      "vendor_phone",
+      "vendor_email",
+      "vendor_size",
+      "vendor_grade",
+      "vendor_category",
+      "vendor_financial",
+      "vendor_collaboration",
+      "vendor_item_code"
+    ],
+    "metadata_columns": [
+      "id",
+      "created_by",
+      "factory_id",
+      "vendor_name",
+      "vendor_tan",
+      "vendor_num_prod",
+      "deemed_status",
+      "created_at",
+      "updated_at",
+      "deleted_at",
+      "deemed_type",
+      "parent_id"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_established_registration_items",
+    "label": "Vendor Established Registration Items",
+    "description": "Table vendor_established_registration_items (12 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "item_specification",
+      "type_code",
+      "item_establish"
+    ],
+    "metadata_columns": [
+      "id",
+      "dm_id",
+      "item_name",
+      "item_ids",
+      "item_order",
+      "is_main_item",
+      "craeted_by",
+      "created_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_financial",
+    "label": "Vendor Financial",
+    "description": "Table vendor_financial (22 columns)",
+    "pk_column": "vf_id",
+    "text_columns": [
+      "banker_details",
+      "tan_no",
+      "ito_address",
+      "licence_details",
+      "excise_registration",
+      "ownership_details",
+      "capital_value",
+      "current_asset",
+      "current_liabilities",
+      "hypothecation_details",
+      "subsidy_concern",
+      "finance_source",
+      "petetion_details",
+      "debarred_details",
+      "ermination_details",
+      "change_details",
+      "financial_files"
+    ],
+    "metadata_columns": [
+      "vf_id",
+      "vm_id",
+      "ownership_type",
+      "created_at",
+      "updated_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "financial_files",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_grade_category",
+    "label": "Vendor Grade Category",
+    "description": "Table vendor_grade_category (10 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "vendor_grade",
+      "category"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "vendor_user_id",
+      "created_by",
+      "updated_by",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_initial_assessment",
+    "label": "Vendor Initial Assessment",
+    "description": "Table vendor_initial_assessment (12 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "initial_assess_entity"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "vsqr_type",
+      "part_1_marks_obtained",
+      "part_2_marks_obtained",
+      "total_marks_obtained",
+      "created_by",
+      "updated_by",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_master",
+    "label": "Vendor Master",
+    "description": "Table vendor_master (74 columns)",
+    "pk_column": "vm_id",
+    "text_columns": [
+      "regd_office_address",
+      "regd_office_std",
+      "regd_office_phone1",
+      "regd_office_phone2",
+      "regd_office_fax",
+      "regd_office_email",
+      "other_address",
+      "nature_of_company",
+      "category_of_industry",
+      "other_registration",
+      "md_detail",
+      "nature_of_business",
+      "other_details",
+      "basic_files",
+      "financial_files",
+      "payment_info",
+      "factory_premises_detail",
+      "electric_power_details",
+      "employee_details",
+      "defence_stores_details",
+      "bought_out_items_details",
+      "testing_details",
+      "production_details",
+      "special_purpose",
+      "facility_details",
+      "last_productions",
+      "basis_of_estimation",
+      "raw_material_source",
+      "inspection_details",
+      "iso_details",
+      "rd_details",
+      "future_details",
+      "outsource_details",
+      "success_details",
+      "technical_files",
+      "banker_details",
+      "tan_no",
+      "ito_address",
+      "licence_details",
+      "excise_registration",
+      "ownership_details",
+      "capital_value",
+      "current_asset",
+      "current_liabilities",
+      "hypothecation_details",
+      "subsidy_concern",
+      "finance_source",
+      "borrowing_limit",
+      "bank_guarrantee",
+      "petetion_details",
+      "debarred_details",
+      "ermination_details",
+      "change_details",
+      "net_worth",
+      "avg_turnover"
+    ],
+    "metadata_columns": [
+      "vm_id",
+      "user_id",
+      "advertisement_id",
+      "application_type",
+      "original_id",
+      "parent_id",
+      "factory_reg_no",
+      "name",
+      "regd_office_pin",
+      "regd_office_mobile",
+      "date_of_commenc",
+      "is_declaration",
+      "created_at",
+      "updated_at",
+      "step_save",
+      "orf_status",
+      "ownership_type",
+      "is_from_archive",
+      "temp_vm_id"
+    ],
+    "date_column": "date_of_commenc",
+    "file_columns": [
+      [
+        "basic_files",
+        ""
+      ],
+      [
+        "financial_files",
+        ""
+      ],
+      [
+        "technical_files",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_master_temporary",
+    "label": "Vendor Master Temporary",
+    "description": "Table vendor_master_temporary (74 columns)",
+    "pk_column": "vm_id",
+    "text_columns": [
+      "selection_details",
+      "regd_office_address",
+      "regd_office_std",
+      "regd_office_phone1",
+      "regd_office_phone2",
+      "regd_office_fax",
+      "regd_office_email",
+      "other_address",
+      "nature_of_company",
+      "category_of_industry",
+      "other_registration",
+      "md_detail",
+      "nature_of_business",
+      "other_details",
+      "basic_files",
+      "financial_files",
+      "payment_info",
+      "factory_premises_detail",
+      "electric_power_details",
+      "employee_details",
+      "defence_stores_details",
+      "bought_out_items_details",
+      "testing_details",
+      "production_details",
+      "special_purpose",
+      "facility_details",
+      "last_productions",
+      "basis_of_estimation",
+      "raw_material_source",
+      "inspection_details",
+      "iso_details",
+      "rd_details",
+      "future_details",
+      "outsource_details",
+      "success_details",
+      "technical_files",
+      "banker_details",
+      "tan_no",
+      "ito_address",
+      "licence_details",
+      "excise_registration",
+      "ownership_details",
+      "capital_value",
+      "current_asset",
+      "current_liabilities",
+      "hypothecation_details",
+      "subsidy_concern",
+      "finance_source",
+      "borrowing_limit",
+      "bank_guarrantee",
+      "petetion_details",
+      "debarred_details",
+      "ermination_details",
+      "change_details",
+      "net_worth",
+      "avg_turnover"
+    ],
+    "metadata_columns": [
+      "vm_id",
+      "user_id",
+      "application_type",
+      "original_id",
+      "parent_id",
+      "factory_reg_no",
+      "name",
+      "regd_office_pin",
+      "regd_office_mobile",
+      "date_of_commenc",
+      "is_declaration",
+      "created_at",
+      "updated_at",
+      "step_save",
+      "orf_status",
+      "ownership_type",
+      "is_from_archive",
+      "factory_id"
+    ],
+    "date_column": "date_of_commenc",
+    "file_columns": [
+      [
+        "basic_files",
+        ""
+      ],
+      [
+        "financial_files",
+        ""
+      ],
+      [
+        "technical_files",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_rectification",
+    "label": "Vendor Rectification",
+    "description": "Table vendor_rectification (13 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "vendor_name",
+      "vendor_city",
+      "item_details",
+      "financial_limit"
+    ],
+    "metadata_columns": [
+      "id",
+      "reg_type",
+      "vm_id",
+      "adv_number",
+      "factory_name",
+      "created_by",
+      "created_at",
+      "updated_by",
+      "updated_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_registration_certificate",
+    "label": "Vendor Registration Certificate",
+    "description": "Table vendor_registration_certificate (22 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "vendor_name",
+      "vendor_address",
+      "items",
+      "financial_limit",
+      "officer_name",
+      "officer_designation"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "reg_type",
+      "registration_code",
+      "registration_date",
+      "no_items",
+      "valid_upto",
+      "vendor_code",
+      "registration_date_code",
+      "certificate_type",
+      "created_at",
+      "created_by",
+      "deleted_at",
+      "is_from_archive",
+      "updated_at",
+      "updated_by"
+    ],
+    "date_column": "registration_date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_registration_code",
+    "label": "Vendor Registration Code",
+    "description": "Table vendor_registration_code (7 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "vendor_code"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "reg_type",
+      "user_id",
+      "created_by",
+      "created_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_renewal_request",
+    "label": "Vendor Renewal Request",
+    "description": "Table vendor_renewal_request (59 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "vendor_code_id",
+      "reference_no",
+      "vendor_details",
+      "certificate_no",
+      "renewal_registration",
+      "assessed_for",
+      "company_name",
+      "office_address",
+      "teliphone_no",
+      "office_fax",
+      "factory_address",
+      "factory_teliphone_no",
+      "factory_fax",
+      "is_address_change",
+      "reasons_address_change",
+      "reasons_address_change_doc",
+      "management_change",
+      "management_change_doc",
+      "experience_change",
+      "experience_change_doc",
+      "accommodation_change",
+      "accommodation_change_doc",
+      "bank_change",
+      "bank_change_doc",
+      "techinfo1",
+      "techinfo1_doc",
+      "techinfo2",
+      "techinfo2_doc",
+      "techinfo3",
+      "techinfo3_doc",
+      "techinfo4",
+      "techinfo4_doc",
+      "techinfo5",
+      "techinfo5_doc",
+      "techinfo6",
+      "techinfo6_doc",
+      "techinfo7",
+      "techinfo7_doc",
+      "is_diff_technology",
+      "basis_of_estimation",
+      "techinfo8_doc",
+      "supply_order",
+      "justify_renewal_reason",
+      "payment_info",
+      "reject_reason"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "new_vm_id",
+      "submission_date",
+      "registration_date",
+      "reg_exp_date",
+      "status",
+      "ammount",
+      "created_at",
+      "created_by",
+      "updated_at",
+      "updated_by"
+    ],
+    "date_column": "submission_date",
+    "file_columns": [
+      [
+        "documents_change",
+        "documents_change"
+      ],
+      [
+        "documents_change_doc",
+        "documents_change_doc"
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_technical",
+    "label": "Vendor Technical",
+    "description": "Table vendor_technical (23 columns)",
+    "pk_column": "vt_id",
+    "text_columns": [
+      "factory_premises_detail",
+      "electric_power_details",
+      "employee_details",
+      "defence_stores_details",
+      "bought_out_items_details",
+      "testing_details",
+      "production_details",
+      "special_purpose",
+      "facility_details",
+      "last_productions",
+      "basis_of_estimation",
+      "raw_material_source",
+      "inspection_details",
+      "iso_details",
+      "rd_details",
+      "future_details",
+      "outsource_details",
+      "success_details",
+      "technical_files"
+    ],
+    "metadata_columns": [
+      "vt_id",
+      "vm_id",
+      "created_at",
+      "updated_at"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "technical_files",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_user",
+    "label": "Vendor User",
+    "description": "Table vendor_user (34 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "address",
+      "road",
+      "city",
+      "pin_code",
+      "pan_no",
+      "mobile_no",
+      "std_no",
+      "phone_no",
+      "fax_no",
+      "nature_of_business",
+      "nature_of_business_files",
+      "category_of_business_files",
+      "gender_of_owner_files",
+      "category_of_owner_files",
+      "startup_reg_no",
+      "standup_reg_no",
+      "other_reg"
+    ],
+    "metadata_columns": [
+      "id",
+      "user_id",
+      "name",
+      "company_name",
+      "state",
+      "tan_no",
+      "gst_no",
+      "category_of_business",
+      "gender_of_owner",
+      "category_of_owner",
+      "is_startup",
+      "is_standup",
+      "created_at",
+      "updated_at",
+      "updated_by",
+      "deleted_at",
+      "deleted_by"
+    ],
+    "date_column": "created_at",
+    "file_columns": [
+      [
+        "nature_of_business_files",
+        ""
+      ],
+      [
+        "category_of_business_files",
+        ""
+      ],
+      [
+        "gender_of_owner_files",
+        ""
+      ],
+      [
+        "category_of_owner_files",
+        ""
+      ]
+    ]
+  },
+  {
+    "db": "mydb",
+    "table": "vendor_vsqr",
+    "label": "Vendor Vsqr",
+    "description": "Table vendor_vsqr (15 columns)",
+    "pk_column": "id",
+    "text_columns": [
+      "vsqr_entity1",
+      "vsqr_entity2"
+    ],
+    "metadata_columns": [
+      "id",
+      "vm_id",
+      "marks_obtained1",
+      "marks_obtained2",
+      "visit_date",
+      "is_manufacturing",
+      "is_testing",
+      "verified_status",
+      "created_by",
+      "updated_by",
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ],
+    "date_column": "visit_date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendorcom_filtered",
+    "label": "Vendorcom Filtered",
+    "description": "Table vendorcom_filtered (45 columns)",
+    "pk_column": "Vendorcode",
+    "text_columns": [
+      "Officer",
+      "Name",
+      "Abb",
+      "State",
+      "City",
+      "Street",
+      "Pin",
+      "Product",
+      "Specification",
+      "U",
+      "Product1",
+      "Specification1",
+      "U1",
+      "Product2",
+      "Specification2",
+      "U2",
+      "Product3",
+      "Specification3",
+      "U3",
+      "Product4",
+      "Specification4",
+      "U4",
+      "Tproduct",
+      "Size",
+      "VendorTAN",
+      "Code",
+      "IP",
+      "Time",
+      "d",
+      "k",
+      "Rn",
+      "est",
+      "ph",
+      "Grade_Old",
+      "Categorisation_Old"
+    ],
+    "metadata_columns": [
+      "Vendorcode",
+      "Factory",
+      "Dtregistry",
+      "Dtexpiry",
+      "Regno",
+      "deemed",
+      "fin_limit",
+      "DtexpiryInit"
+    ],
+    "date_column": "Dtexpiry",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendorcom_filtered_copy",
+    "label": "Vendorcom Filtered Copy",
+    "description": "Table vendorcom_filtered_copy (43 columns)",
+    "pk_column": "Vendorcode",
+    "text_columns": [
+      "Officer",
+      "Name",
+      "Abb",
+      "State",
+      "City",
+      "Street",
+      "Pin",
+      "Product",
+      "Specification",
+      "U",
+      "Product1",
+      "Specification1",
+      "U1",
+      "Product2",
+      "Specification2",
+      "U2",
+      "Product3",
+      "Specification3",
+      "U3",
+      "Product4",
+      "Specification4",
+      "U4",
+      "Tproduct",
+      "Size",
+      "VendorTAN",
+      "Code",
+      "IP",
+      "Time",
+      "d",
+      "k",
+      "Rn",
+      "est",
+      "ph"
+    ],
+    "metadata_columns": [
+      "Vendorcode",
+      "Factory",
+      "Dtregistry",
+      "Dtexpiry",
+      "Regno",
+      "deemed",
+      "fin_limit",
+      "DtexpiryInit"
+    ],
+    "date_column": "Dtexpiry",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendorcom_filtered_product",
+    "label": "Vendorcom Filtered Product",
+    "description": "Table vendorcom_filtered_product (9 columns)",
+    "pk_column": null,
+    "text_columns": [
+      "fycode",
+      "type",
+      "spec",
+      "est1"
+    ],
+    "metadata_columns": [
+      "product",
+      "v",
+      "imp",
+      "ord",
+      "date"
+    ],
+    "date_column": "date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendorcom_filtered_product_copy",
+    "label": "Vendorcom Filtered Product Copy",
+    "description": "Table vendorcom_filtered_product_copy (9 columns)",
+    "pk_column": null,
+    "text_columns": [
+      "fycode",
+      "product",
+      "type",
+      "spec",
+      "est1"
+    ],
+    "metadata_columns": [
+      "v",
+      "imp",
+      "ord",
+      "date"
+    ],
+    "date_column": "date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendorcom_renew",
+    "label": "Vendorcom Renew",
+    "description": "Table vendorcom_renew (6 columns)",
+    "pk_column": "v",
+    "text_columns": [
+      "officername",
+      "desg"
+    ],
+    "metadata_columns": [
+      "v",
+      "date",
+      "e",
+      "fin_limit"
+    ],
+    "date_column": "date",
+    "file_columns": []
+  },
+  {
+    "db": "mydb",
+    "table": "vendorcom_renew_copy",
+    "label": "Vendorcom Renew Copy",
+    "description": "Table vendorcom_renew_copy (6 columns)",
+    "pk_column": "v",
+    "text_columns": [
+      "officername",
+      "desg"
+    ],
+    "metadata_columns": [
+      "v",
+      "date",
+      "e",
+      "fin_limit"
+    ],
+    "date_column": "date",
+    "file_columns": []
+  }
+]

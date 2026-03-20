@@ -51,6 +51,12 @@ class Settings(BaseSettings):
     ollama_llm_model: str = "llama3.1:8b"
     ollama_embed_model: str = "nomic-embed-text:latest"
     ollama_timeout: int = 120
+    ollama_llm_timeout: int = 300
+
+    # ── Discovery ────────────────────────────────────────────────
+    # "heuristic" = instant rules only, "llm" = LLM only (background),
+    # "auto" = heuristic first then LLM refinement in background
+    discovery_mode: str = "heuristic"
 
     # ── Embedding ───────────────────────────────────────────────
     embedding_dims: int = 768
@@ -89,7 +95,7 @@ class Settings(BaseSettings):
     save_every_n: int = 2000
 
     # ── RAG ─────────────────────────────────────────────────────
-    rag_top_k: int = 5
+    rag_top_k: int = 8
     rag_max_tokens: int = 2048
     rag_temperature: float = 0.1
     rag_rerank_enabled: bool = True
